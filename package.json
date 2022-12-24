@@ -1,0 +1,27 @@
+{
+  "name": "no-circular-deps",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/i-sanyam/no-circular-deps.git"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/i-sanyam/no-circular-deps/issues"
+  },
+  "homepage": "https://github.com/i-sanyam/no-circular-deps#readme",
+  "dependencies": {
+    "lodash": "4.17.21"
+  },
+  "devDependencies": {
+    "madge": "5.0.1"
+  }
+}
