@@ -61,7 +61,7 @@ const detectNewCircularDependencies = async () => {
   let isNewCircularDependencyFound = false;
 
   for (const newDependency of branchCircularDeps) {
-    const existingDependency = masterCircularDeps.find(d => isEqual(d, newDependency));
+    const existingDependency = masterCircularDeps.find((d) => isEqual(d, newDependency));
     if (!existingDependency) {
       isNewCircularDependencyFound = true;
       console.error('new circular dependency', newDependency);
