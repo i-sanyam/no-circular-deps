@@ -7,11 +7,13 @@
     "lint": "./node_modules/.bin/eslint .",
     "start": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "validate-circular-dependencies": "node validate-circular-deps"
+    "validate-circular-dependencies": "node validate-circular-deps",
+    "prepare": "husky install"
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm run lint && npm run validate-circular-dependencies"
+      "pre-push": "npm run lint && npm run validate-circular-dependencies",
+      "pre-commit": "npm run lint && npm run validate-circular-dependencies"
     }
   },
   "repository": {
