@@ -12,6 +12,7 @@
     },
     "rules": {
         "no-restricted-syntax": 0,
-        "import/extensions": [0, {  "js": "always"  }]
+        "import/extensions": [0, {  "js": "always"  }],
+        "import/no-cycle": 0 // this should be ideally enabled
     }
 }
