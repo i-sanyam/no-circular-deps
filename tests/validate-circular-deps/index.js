@@ -28,7 +28,7 @@ const getCurrentGitBranchName = async () => {
 const generateCircularDependenciesLogFile = async (circularDependencies, fileName) => {
   try {
     const fileNameToUse = !fileName ? await getCurrentGitBranchName() : fileName;
-    const fileToWrite = `./validate-circular-deps/${fileNameToUse}CircularDeps.log`;
+    const fileToWrite = `./tests/validate-circular-deps/${fileNameToUse}CircularDeps.log`;
     await writeFile(fileToWrite, JSON.stringify(circularDependencies));
   } catch (e) {
     console.error('Unable to write circular dependencies file', e);
