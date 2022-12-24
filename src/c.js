@@ -1,0 +1,1 @@
+export const VAR_C = 'I belong to c.js';
