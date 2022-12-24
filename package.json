@@ -9,6 +9,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "validate-circular-dependencies": "node validate-circular-deps"
   },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run lint && npm run validate-circular-dependencies"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/i-sanyam/no-circular-deps.git"
