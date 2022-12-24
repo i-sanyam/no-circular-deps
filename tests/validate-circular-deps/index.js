@@ -9,7 +9,10 @@ const { isEqual } = lodash;
 const exec = util.promisify(childProcess.exec);
 
 const require = createRequire(import.meta.url);
-const masterCircularDeps = require('./masterCircularDeps.json');
+const baseCircularDeps = require('./masterCircularDeps.json');
+
+const BASE_BRANCH = 'master';
+const BASE_CIRCULAR_DEPS_FILENAME = `${BASE_BRANCH}CircularDeps.json`;
 
 const getCurrentGitBranchName = async () => {
   try {
@@ -48,35 +51,39 @@ const getCircularDependencies = async (path = './', options = {}) => {
 const detectNewCircularDependencies = async () => {
   const branchCircularDeps = await getCircularDependencies('./', { log: true });
 
-  if (branchCircularDeps.length === masterCircularDeps.length
-    && isEqual(masterCircularDeps, branchCircularDeps)) {
+  if (branchCircularDeps.length === baseCircularDeps.length
+    && isEqual(baseCircularDeps, branchCircularDeps)) {
     return;
   }
 
-  if (branchCircularDeps.length > masterCircularDeps.length) {
-    console.error(`Fail. Expected ${masterCircularDeps.length} Circular Dependencies. Got ${branchCircularDeps.length}`);
-  }
-
-  const isCircularDependencyCountReduced = branchCircularDeps.length < masterCircularDeps.length;
-  let isNewCircularDependencyFound = false;
+  const isCircularDependencyCountReduced = branchCircularDeps.length < baseCircularDeps.length;
+  let newCircularDependencyCount = 0;
 
   for (const newDependency of branchCircularDeps) {
-    const existingDependency = masterCircularDeps.find((d) => isEqual(d, newDependency));
+    const existingDependency = baseCircularDeps.find((d) => isEqual(d, newDependency));
     if (!existingDependency) {
-      isNewCircularDependencyFound = true;
-      console.error('new circular dependency', newDependency);
+      newCircularDependencyCount += 1;
+      console.error('\x1b[31m', 'error', '\x1b[0m', newDependency.toString(), '\x1b[90m', 'new-circular-dependency');
     }
   }
 
-  if (isCircularDependencyCountReduced && !isNewCircularDependencyFound) {
-    console.log(`Good Job. You reduced Circular Dependencies from ${masterCircularDeps.length} to ${branchCircularDeps.length}`);
+  if (isCircularDependencyCountReduced && newCircularDependencyCount === 0) {
+    console.log('\x1b[32m');
+    console.log('Good Job!', '\x1b[0m', `You reduced Circular Dependencies from ${baseCircularDeps.length} to ${branchCircularDeps.length}.`);
+    console.log('\x1b[33m', '\x1b[1m');
+    console.log(`Please update circular dependencies in ${BASE_CIRCULAR_DEPS_FILENAME}`, '\x1b[0m');
     return;
   }
 
-  throw new Error('Uh Oh! New circular dependency detected.');
+  if (branchCircularDeps.length > baseCircularDeps.length) {
+    throw new Error(`Expected ${baseCircularDeps.length} Circular Dependencies. Got ${branchCircularDeps.length}`);
+  }
+  throw new Error(`${newCircularDependencyCount} New circular dependencies detected.`);
 };
 
 detectNewCircularDependencies().catch((e) => {
+  console.error('\x1b[1m', '\x1b[31m', '\n');
   console.error(e && e.message);
-  process.exit(1);
+  console.error('✖ Failed!', '\x1b[0m');
+  process.exit(2);
 });
