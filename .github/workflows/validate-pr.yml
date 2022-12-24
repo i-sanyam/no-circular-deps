@@ -2,7 +2,7 @@ name: ⚙️ Validate PR
 
 on:
   pull_request:
-    branches: [ newProduction ]
+    branches: [ master ]
     types: [opened, synchronize, reopened]
 
 jobs:
@@ -14,23 +14,20 @@ jobs:
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.11.0
 
-      - name: ⬇️ Checkout projectX
+      - name: ⬇️ Checkout Repository
         uses: actions/checkout@v3
 
       - name: ⎔ Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 12
-          # cache npm can be used only when there is a package-lock.json
-          # cache: 'npm'
+          node-version: 18
+          cache: 'npm'
 
       - name: 📥 npm install
         uses: bahmutov/npm-install@v1.8.5
-        with:
-          useLockFile: false
 
-      - name: 🔬 Lint
-        run: npm run lint
+      - name: 🔬 Sanitize
+        run: npm run sanitize
       
-      - name: Validate Circular Dependencies
+      - name: 🔬 Validate Circular Dependencies
         run: npm run validate-circular-dependencies
