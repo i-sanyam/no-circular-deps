@@ -85,5 +85,5 @@ detectNewCircularDependencies().catch((e) => {
   console.error('\x1b[1m', '\x1b[31m', '\n');
   console.error(e && e.message);
   console.error('✖ Failed!', '\x1b[0m');
-  process.exit(2);
+  process.exitCode = 2;
 });
