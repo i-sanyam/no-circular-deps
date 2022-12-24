@@ -1,5 +1,7 @@
-import { VAR_B } from './b.js';
+import VAR_B from './b';
 
 console.log(VAR_B);
 
-export const VAR_A = 'I belong to index.js';
+const VAR_A = 'I belong to index.js';
+
+export default VAR_A;
