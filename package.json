@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint .",
-    "start": "node src/index.js",
+    "start": "node src",
     "test": "echo \"Error: no test specified\" && exit 1",
     "validate-circular-dependencies": "node tests/validate-circular-deps",
     "sanitize": "npm run lint && npm run validate-circular-dependencies",

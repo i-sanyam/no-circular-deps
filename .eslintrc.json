@@ -11,6 +11,7 @@
         "sourceType": "module"
     },
     "rules": {
-        "no-restricted-syntax": 0
+        "no-restricted-syntax": 0,
+        "import/extensions": [0, {  "js": "always"  }]
     }
 }

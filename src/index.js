@@ -1,4 +1,4 @@
-import VAR_B from './b';
+import VAR_B from './b.js';
 
 console.log(VAR_B);
 
