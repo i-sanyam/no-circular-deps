@@ -1,5 +1,3 @@
-import { VAR_C } from './c';
+import VAR_C from './c';
 
-const VAR_B = `I belong to b.js AND ${VAR_C}`;
-
-export default VAR_B;
+export default `I belong to b.js AND ${VAR_C}`;

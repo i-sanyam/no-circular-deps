@@ -1,3 +1,1 @@
-const VAR_C = 'I belong to c.js';
-
-export default VAR_C;
+export default 'I belong to c.js';
