@@ -2,7 +2,7 @@ name: ⚙️ Sanitization
 
 on: 
   pull_request:
-    branches: [ master ]
+    branches: [ master, node-v12 ]
     types: [opened, synchronize, reopened]
   push:
     branches: [ master, node-v12 ]

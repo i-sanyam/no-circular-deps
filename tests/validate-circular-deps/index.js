@@ -4,6 +4,7 @@ import lodash from 'lodash';
 import madge from 'madge';
 import util from 'util';
 import { promises as fsPromises } from 'fs';
+import { logInfo, logError, CLI_COLOR } from './log.js';
 
 const { isEqual } = lodash;
 const { writeFile } = fsPromises;
@@ -36,8 +37,8 @@ const generateCircularDependenciesLogFile = async (circularDependencies, fileNam
     const fileToWrite = `./tests/validate-circular-deps/${fileNameToUse}CircularDeps.log`;
     await writeFile(fileToWrite, JSON.stringify(circularDependencies));
   } catch (e) {
-    console.error('\x1b[33m');
-    console.error('Unable to write circular dependencies file\n', '\x1b[0m', e);
+    logError(CLI_COLOR.FgYellow, 'Unable to write circular dependencies file');
+    logError(e && e.message);
   }
 };
 
@@ -66,15 +67,14 @@ const detectNewCircularDependencies = async () => {
     const existingDependency = baseCircularDeps.find((d) => isEqual(d, newDependency));
     if (!existingDependency) {
       newCircularDependencyCount += 1;
-      console.error('\x1b[31m', 'error', '\x1b[0m', newDependency.toString(), '\x1b[90m', 'new-circular-dependency');
+      logError(CLI_COLOR.FgRed, 'error', CLI_COLOR.Reset, newDependency.toString(), CLI_COLOR.FgGray, 'new-circular-dependency');
     }
   }
 
   if (isCircularDependencyCountReduced && newCircularDependencyCount === 0) {
-    console.log('\x1b[32m');
-    console.log('Good Job!', '\x1b[0m', `You reduced Circular Dependencies from ${baseCircularDeps.length} to ${branchCircularDeps.length}.`);
-    console.log('\x1b[33m', '\x1b[1m');
-    console.log(`Please update circular dependencies in ${BASE_CIRCULAR_DEPS_FILENAME}`, '\x1b[0m');
+    logInfo(CLI_COLOR.FgGreen, '\nGood Job!');
+    logInfo(`  You reduced Circular Dependencies from ${baseCircularDeps.length} to ${branchCircularDeps.length}.`);
+    logInfo(CLI_COLOR.Bright, CLI_COLOR.FgYellow, `Please update circular dependencies in ${BASE_CIRCULAR_DEPS_FILENAME}`);
     return;
   }
 
@@ -85,8 +85,7 @@ const detectNewCircularDependencies = async () => {
 };
 
 detectNewCircularDependencies().catch((e) => {
-  console.error('\x1b[1m', '\x1b[31m', '\n');
-  console.error(e && e.message);
-  console.error('✖ Failed!', '\x1b[0m');
+  logError(e && e.message);
+  logError(CLI_COLOR.Bright, CLI_COLOR.FgRed, '✖ Failed!');
   process.exitCode = 2;
 });
