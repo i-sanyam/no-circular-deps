@@ -5,7 +5,7 @@ on:
     branches: [ master ]
     types: [opened, synchronize, reopened]
   push:
-    branches: [ master ]
+    branches: [ master, node-v12 ]
 
 jobs:
   sanitize:
