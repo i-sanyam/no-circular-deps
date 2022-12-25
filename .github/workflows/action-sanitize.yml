@@ -1,0 +1,34 @@
+name: Validate PR
+
+on:
+  pull_request:
+    branches: [ node-v12 ]
+    types: [opened, synchronize, reopened]
+
+jobs:
+  validate:
+    name: Pull Request Validation
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.11.0
+
+      - name: ⬇️ Checkout Repo
+        uses: actions/checkout@v3
+        # with:
+        #   path: main
+
+      - name: ⚙️ Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 12
+          cache: 'npm'
+
+      - name: 📥 npm install
+        uses: bahmutov/npm-install@v1.8.5
+
+      - name: Detect Circular Dependencies
+        uses: i-sanyam/action-no-circular-deps/@beta-v1.0.6
+        # with:
+        #   baseFilePath: ./main
