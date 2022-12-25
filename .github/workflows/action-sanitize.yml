@@ -29,6 +29,6 @@ jobs:
         uses: bahmutov/npm-install@v1.8.5
 
       - name: Detect Circular Dependencies
-        uses: i-sanyam/action-no-circular-deps/@beta-v1.0.2
+        uses: i-sanyam/action-no-circular-deps/@beta-v1.0.3
         # with:
         #   baseFilePath: ./main
