@@ -27,8 +27,6 @@ jobs:
 
       - name: 📥 npm install
         uses: bahmutov/npm-install@v1.8.5
-        with:
-          useLockFile: false
 
       - name: Detect Circular Dependencies
         uses: i-sanyam/action-no-circular-deps/@beta-v1.0.2
