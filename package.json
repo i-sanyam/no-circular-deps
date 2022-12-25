@@ -3,17 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/index.js",
-  "engines" : { 
-    "npm" : ">=8.0.0 <9.0.0",
-    "node" : ">=16.19.0 <19.0.0"
+  "engines": {
+    "npm": ">=6.14.0 <8.0.0",
+    "node": ">=12.13.0 <15.0.0"
   },
   "scripts": {
     "lint": "./node_modules/.bin/eslint .",
     "start": "node src",
     "test": "echo \"Error: no test specified\" && exit 1",
     "validate-circular-dependencies": "node tests/validate-circular-deps",
-    "sanitize": "npm run lint && npm run validate-circular-dependencies",
-    "prepare": "husky install"
+    "sanitize": "npm run lint && npm run validate-circular-dependencies"
   },
   "repository": {
     "type": "git",
@@ -27,17 +26,15 @@
     "url": "https://github.com/i-sanyam/no-circular-deps/issues"
   },
   "homepage": "https://github.com/i-sanyam/no-circular-deps#readme",
-  "dependencies": {
-    "lodash": "4.17.21"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "eslint": "^8.30.0",
+    "eslint": "8.30.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-n": "^15.6.0",
     "eslint-plugin-promise": "^6.1.1",
-    "husky": "8.0.2",
+    "husky": "4.3.8",
+    "lodash": "4.17.21",
     "madge": "5.0.1"
   }
 }
