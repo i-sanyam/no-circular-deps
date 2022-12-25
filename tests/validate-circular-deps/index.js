@@ -1,11 +1,13 @@
-import childProcess from 'node:child_process';
+import childProcess from 'child_process';
 import { createRequire } from 'module';
 import lodash from 'lodash';
 import madge from 'madge';
-import util from 'node:util';
-import { writeFile } from 'node:fs/promises';
+import util from 'util';
+import { promises as fsPromises } from 'fs';
 
 const { isEqual } = lodash;
+const { writeFile } = fsPromises;
+
 const exec = util.promisify(childProcess.exec);
 
 const require = createRequire(import.meta.url);
@@ -34,7 +36,8 @@ const generateCircularDependenciesLogFile = async (circularDependencies, fileNam
     const fileToWrite = `./tests/validate-circular-deps/${fileNameToUse}CircularDeps.log`;
     await writeFile(fileToWrite, JSON.stringify(circularDependencies));
   } catch (e) {
-    console.error('Unable to write circular dependencies file', e);
+    console.error('\x1b[33m');
+    console.error('Unable to write circular dependencies file\n', '\x1b[0m', e);
   }
 };
 
