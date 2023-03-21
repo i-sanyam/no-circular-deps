@@ -1,4 +1,4 @@
-name: ⚙️ Sanitization
+name: PR Details
 
 on: 
   pull_request:
@@ -8,13 +8,11 @@ on:
     branches: [ master, node-v12 ]
 
 jobs:
-  sanitize:
-    name: Sanitization
+  pr-details:
+    name: Pr Details
     runs-on: ubuntu-latest
     
     steps:
-      - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.11.0
 
       - name: ⬇️ Checkout Repository
         uses: actions/checkout@v3
@@ -27,9 +25,8 @@ jobs:
 
       - name: 📥 npm install
         uses: bahmutov/npm-install@v1.8.5
-
-      - name: 🔬 Sanitize
-        run: npm run sanitize
       
-      - name: 🔬 Validate Circular Dependencies
-        run: npm run validate-circular-dependencies
+      - name: 🔬 Get PR
+        run: npm run pr-details
+        env: 
+          GHT: ${{ secrets.GITHUB_TOKEN }}
